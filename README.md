@@ -9,6 +9,7 @@
 4. [向量检索算法](https://juejin.cn/post/7615442040114561075)
 5. [实战：企业智能知识库](https://juejin.cn/post/7616617935294922803)
 6. [Langchain-RAG](https://juejin.cn/post/7616187156478541834)
-7. [基于Web网页的RAG实战](https://juejin.cn/post/7616564460149227570)
+7. [Langchain-基于Web网页的RAG实战](https://juejin.cn/post/7616564460149227570)
 8. []()
-9. 
+
+Langchain 资料见 [github](https://github.com/chaorsAI/HelloLangchain)
