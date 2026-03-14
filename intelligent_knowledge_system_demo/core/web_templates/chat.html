@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 超智通 - 超来科技智能知识库系统 </title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-base: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius-sm: 6px;
+            --radius: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            height: 64px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-tagline {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            margin-left: 8px;
+            padding-left: 8px;
+            border-left: 1px solid var(--border);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .nav-btn:hover {
+            background: var(--bg-base);
+            color: var(--text-primary);
+        }
+
+        .nav-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 主布局 */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* 左侧边栏 */
+        .sidebar {
+            width: 320px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* 信息卡片 */
+        .info-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+            border: 1px solid #dbeafe;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .info-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-list {
+            list-style: none;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .info-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .info-list strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* 上传区域 */
+        .upload-section {
+            background: var(--bg-card);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .upload-dropzone {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-md);
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-base);
+            margin-bottom: 16px;
+        }
+
+        .upload-dropzone:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .upload-dropzone.dragover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .upload-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .upload-hint {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        /* 文件列表 */
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-base);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .file-item:hover {
+            border-color: var(--primary-light);
+            background: white;
+        }
+
+        .file-item.success {
+            border-left: 3px solid var(--success);
+        }
+
+        .file-item.error {
+            border-left: 3px solid var(--danger);
+        }
+
+        .file-item.processing {
+            border-left: 3px solid var(--warning);
+        }
+
+        .file-icon-small {
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+
+        .file-meta {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-status {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .file-status.success { color: var(--success); }
+        .file-status.error { color: var(--danger); }
+        .file-status.processing { color: var(--warning); }
+
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 6px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar.show {
+            display: block;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* 右侧内容区 */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-base);
+        }
+
+        /* 知识库选择器 */
+        .kb-bar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .kb-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kb-select-wrapper {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .kb-select {
+            width: 100%;
+            padding: 10px 36px 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            color: var(--text-primary);
+            background: var(--bg-base);
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.2s;
+        }
+
+        .kb-select:hover {
+            border-color: var(--primary-light);
+        }
+
+        .kb-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .kb-select-arrow {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            pointer-events: none;
+        }
+
+        .kb-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        /* 修复：图标旋转动画，只让内部的 icon 旋转 */
+        .icon-btn .icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-btn.spinning .icon {
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 修复：调整 tooltip 样式，避免被遮挡 */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tip);
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 12px;
+            background: var(--text-primary);
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: var(--radius);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+        }
+
+        .tooltip::before {
+            content: "";
+            position: absolute;
+            top: calc(100% + 2px);
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-bottom-color: var(--text-primary);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 1001;
+        }
+
+        .tooltip:hover::after,
+        .tooltip:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 聊天区域 */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin: 20px 24px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-tertiary);
+        }
+
+        .welcome-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, #dbeafe 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+        }
+
+        .welcome-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .welcome-text {
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .message {
+            max-width: 80%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+
+        .message-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            background: var(--bg-base);
+        }
+
+        .user-message {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .user-message .message-bubble {
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-md) var(--radius-md) 4px var(--radius-md);
+            padding: 14px 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: var(--shadow-md);
+        }
+
+        .user-message .message-avatar {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            align-items: flex-start;
+        }
+
+        .bot-message .message-bubble {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 4px;
+            padding: 14px 18px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .bot-message .message-avatar {
+            background: #f0fdf4;
+            color: var(--success);
+        }
+
+        /* 源文档折叠 */
+        .source-section {
+            margin-top: 12px;
+        }
+
+        .source-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .source-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .source-toggle.active {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .source-toggle .arrow {
+            transition: transform 0.2s;
+            font-size: 10px;
+        }
+
+        .source-toggle.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        .source-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .source-content.show {
+            max-height: 600px;
+            opacity: 1;
+            margin-top: 12px;
+        }
+
+        .source-list {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .source-item {
+            padding: 12px;
+            background: var(--bg-base);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--primary);
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .source-index {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        /* 输入区域 */
+        .input-area {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 12px 16px;
+            transition: all 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            background: white;
+        }
+
+        #user-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+            color: var(--text-primary);
+            min-height: 24px;
+            max-height: 120px;
+        }
+
+        #user-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .send-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .send-btn:disabled {
+            background: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+
+        /* 打字指示器 */
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            padding: 16px 20px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-left: 36px;
+        }
+
+        .typing-indicator.show {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-tertiary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-tertiary);
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .chat-container {
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <div class="brand">
+            <div class="brand-logo">智</div>
+            <div>
+                <div class="brand-name">超智通</div>
+            </div>
+            <div class="brand-tagline">超来科技智能知识库系统</div>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn">帮助中心</button>
+            <button class="nav-btn primary">系统管理</button>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <!-- 左侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">知识库管理</div>
+                <div class="sidebar-subtitle">上传文档构建智能知识库</div>
+            </div>
+
+            <div class="sidebar-content">
+                <!-- 使用指南 -->
+                <div class="info-card">
+                    <div class="info-card-title">
+                        <span>💡</span>
+                        <span>使用指南</span>
+                    </div>
+                    <ul class="info-list">
+                        <li>拖拽或点击上传文档，系统自动解析入库</li>
+                        <li>支持 PDF、Word、TXT、Markdown 格式</li>
+                        <li>重复上传同名文件将覆盖历史版本</li>
+                        <li>在右侧选择知识库开始智能问答</li>
+                    </ul>
+                </div>
+
+                <!-- 上传区域 -->
+                <div class="upload-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <span>📁</span>
+                            <span>文档上传</span>
+                        </div>
+                    </div>
+
+                    <div class="upload-dropzone" id="dropzone">
+                        <div class="upload-icon">☁️</div>
+                        <div class="upload-text">点击或拖拽文件至此</div>
+                        <div class="upload-hint">支持 PDF、DOCX、TXT、MD</div>
+                    </div>
+                    <input type="file" id="file-input" multiple accept=".pdf,.docx,.doc,.txt,.md">
+
+                    <!-- 文件列表 -->
+                    <div class="file-list" id="file-list">
+                        <!-- 动态添加文件项 -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <main class="content-area">
+            <!-- 知识库选择栏 -->
+            <div class="kb-bar">
+                <div class="kb-label">
+                    <span>📚</span>
+                    <span>当前知识库</span>
+                </div>
+                <div class="kb-select-wrapper">
+                    <select class="kb-select" id="collection-name">
+                        <option value="">通用知识库（默认）</option>
+                    </select>
+                    <span class="kb-select-arrow">▼</span>
+                </div>
+                <div class="kb-actions">
+                    <button class="icon-btn tooltip" id="refresh-kb" data-tip="刷新列表">
+                        <span class="icon">🔄</span>
+                    </button>
+                    <button class="icon-btn tooltip" data-tip="设置">
+                        <span class="icon">⚙️</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 聊天区域 -->
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- 欢迎消息 -->
+                    <div class="welcome-message" id="welcome-msg">
+                        <div class="welcome-icon">🤖</div>
+                        <div class="welcome-title">智能问答助手已就绪</div>
+                        <div class="welcome-text">
+                            选择左侧知识库或上传新文档，开始体验基于 RAG 技术的智能问答服务。
+                            所有回答均基于您的私有知识库，确保数据安全与准确性。
+                        </div>
+                    </div>
+
+                    <!-- 打字指示器 -->
+                    <div class="typing-indicator" id="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <!-- 输入区域 -->
+                <div class="input-area">
+                    <div class="input-wrapper">
+                        <textarea id="user-input" rows="1" placeholder="输入您的问题，按 Enter 发送..."></textarea>
+                        <div class="input-actions">
+                            <button class="send-btn" id="send-button" disabled>
+                                ➤
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM 元素
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const typingIndicator = document.getElementById('typing-indicator');
+            const collectionName = document.getElementById('collection-name');
+            const refreshBtn = document.getElementById('refresh-kb');
+            const welcomeMsg = document.getElementById('welcome-msg');
+            const dropzone = document.getElementById('dropzone');
+            const fileInput = document.getElementById('file-input');
+            const fileList = document.getElementById('file-list');
+
+            // 自动调整输入框高度
+            userInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                sendButton.disabled = this.value.trim().length === 0;
+            });
+
+            // 添加消息
+            function addMessage(text, isUser, searchResults = null) {
+                // 隐藏欢迎消息
+                if (welcomeMsg) welcomeMsg.style.display = 'none';
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+
+                const header = document.createElement('div');
+                header.className = 'message-header';
+                header.innerHTML = `
+                    <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
+                    <span>${isUser ? '您' : 'AI 助手'}</span>
+                    <span>·</span>
+                    <span>${new Date().toLocaleTimeString('zh-CN', {hour: '2-digit', minute:'2-digit'})}</span>
+                `;
+
+                const bubble = document.createElement('div');
+                bubble.className = 'message-bubble';
+
+                if (!isUser && searchResults && searchResults.length > 0) {
+                    bubble.textContent = text;
+                    renderSources(bubble, searchResults);
+                } else {
+                    bubble.textContent = text;
+                }
+
+                messageDiv.appendChild(header);
+                messageDiv.appendChild(bubble);
+
+                typingIndicator.classList.remove('show');
+                chatMessages.insertBefore(messageDiv, typingIndicator);
+                scrollToBottom();
+            }
+
+            function renderSources(container, sources) {
+                const section = document.createElement('div');
+                section.className = 'source-section';
+
+                const toggle = document.createElement('div');
+                toggle.className = 'source-toggle';
+                toggle.innerHTML = `
+                    <span>📄</span>
+                    <span>原始文档</span>
+                    <span style="color: var(--text-tertiary); margin-left: 4px;">(${sources.length})</span>
+                    <span class="arrow">▶</span>
+                `;
+
+                const content = document.createElement('div');
+                content.className = 'source-content';
+
+                const list = document.createElement('div');
+                list.className = 'source-list';
+
+                sources.forEach((doc, idx) => {
+                    const item = document.createElement('div');
+                    item.className = 'source-item';
+                    item.innerHTML = `<span class="source-index">${idx + 1}</span>${doc}`;
+                    list.appendChild(item);
+                });
+
+                content.appendChild(list);
+
+                toggle.onclick = () => {
+                    const isActive = toggle.classList.toggle('active');
+                    content.classList.toggle('show');
+                    if (isActive) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    } else {
+                        content.style.maxHeight = '0px';
+                    }
+                };
+
+                section.appendChild(toggle);
+                section.appendChild(content);
+                container.appendChild(section);
+            }
+
+            function showTyping() {
+                typingIndicator.classList.add('show');
+                scrollToBottom();
+            }
+
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // 发送消息
+            async function sendMessage() {
+                const text = userInput.value.trim();
+                if (!text) return;
+
+                sendButton.disabled = true;
+                addMessage(text, true);
+                userInput.value = '';
+                userInput.style.height = 'auto';
+                showTyping();
+
+                try {
+                    const response = await fetch('/chat/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: text })
+                    });
+
+                    const data = await response.json();
+                    addMessage(data.response, false, data.search_results);
+                } catch (error) {
+                    addMessage('抱歉，服务暂时不可用，请稍后重试。', false);
+                } finally {
+                    sendButton.disabled = userInput.value.trim().length === 0;
+                }
+            }
+
+            sendButton.addEventListener('click', sendMessage);
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // 文件上传
+            function createFileItem(name, size) {
+                const div = document.createElement('div');
+                div.className = 'file-item processing';
+                div.innerHTML = `
+                    <div class="file-icon-small">📄</div>
+                    <div class="file-details">
+                        <div class="file-name">${name}</div>
+                        <div class="file-meta">
+                            <span>${(size / 1024).toFixed(1)} KB</span>
+                            <span class="file-status processing">● 上传中</span>
+                        </div>
+                        <div class="progress-bar show">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                `;
+                return div;
+            }
+
+            async function uploadFile(file) {
+                const item = createFileItem(file.name, file.size);
+                fileList.insertBefore(item, fileList.firstChild);
+
+                const progressFill = item.querySelector('.progress-fill');
+                const statusEl = item.querySelector('.file-status');
+
+                // 模拟进度
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress > 90) progress = 90;
+                    progressFill.style.width = progress + '%';
+                }, 200);
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const response = await fetch('/document_upload/', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    clearInterval(interval);
+                    progressFill.style.width = '100%';
+
+                    if (response.ok) {
+                        item.classList.remove('processing');
+                        item.classList.add('success');
+                        statusEl.className = 'file-status success';
+                        statusEl.innerHTML = '✓ 上传成功';
+                        setTimeout(() => progressFill.parentElement.style.display = 'none', 500);
+                        loadCollections();
+                    } else {
+                        throw new Error('Upload failed');
+                    }
+                } catch (error) {
+                    clearInterval(interval);
+                    item.classList.remove('processing');
+                    item.classList.add('error');
+                    statusEl.className = 'file-status error';
+                    statusEl.innerHTML = '✗ 上传失败';
+                }
+            }
+
+            // 拖拽事件
+            dropzone.addEventListener('click', () => fileInput.click());
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            });
+            dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+                Array.from(e.dataTransfer.files).forEach(uploadFile);
+            });
+            fileInput.addEventListener('change', (e) => {
+                Array.from(e.target.files).forEach(uploadFile);
+                fileInput.value = '';
+            });
+
+            // 知识库管理
+            async function loadCollections() {
+                try {
+                    const res = await fetch('/collection/');
+                    const data = await res.json();
+
+                    const current = collectionName.value;
+                    collectionName.innerHTML = '<option value="">通用知识库（默认）</option>';
+
+                    data.name_list.forEach(name => {
+                        const opt = document.createElement('option');
+                        opt.value = name;
+                        opt.textContent = name;
+                        if (name === data.collection_name || name === current) opt.selected = true;
+                        collectionName.appendChild(opt);
+                    });
+                } catch (e) {
+                    console.error('Failed to load collections:', e);
+                }
+            }
+
+            // 切换知识库
+            collectionName.addEventListener('change', async () => {
+                try {
+                    await fetch('/collection/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ collection_name: collectionName.value })
+                    });
+                } catch (e) {
+                    console.error('Failed to switch collection:', e);
+                }
+            });
+
+            // 修复：刷新按钮事件 - 只让图标旋转，不是整个按钮
+            refreshBtn.addEventListener('click', async () => {
+                // 添加旋转动画类
+                refreshBtn.classList.add('spinning');
+
+                // 执行刷新
+                await loadCollections();
+
+                // 停止旋转（保留一点延迟让用户感知）
+                setTimeout(() => {
+                    refreshBtn.classList.remove('spinning');
+                }, 500);
+            });
+
+            // 初始化
+            loadCollections();
+            userInput.focus();
+        });
+    </script>
+</body>
+</html>

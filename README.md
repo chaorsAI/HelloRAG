@@ -1,5 +1,2 @@
 # HelloRAG
 HelloRAG
-HelloRAG
-HelloRAG
-
