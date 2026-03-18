@@ -1,8 +1,24 @@
+# index_metadata_field_SelfQueryRetriever.py
+# # 预检索-索引优化-元数据索引优：通过为文档附加“标签”来缩小检索范围、提升精度的核心技术
+# SelfQueryRetriever：LangChain中可以让大模型（LLM）自己分析用户提问，并自动生成数据库查询指令的智能查询器。
+# 在Langchain1.0之后通过langchain_classic导入！！！
+""""
+- 核心目标：解决朴素 RAG 仅靠语义相似度检索时 **“找不准”和“找得慢”** 的问题。
+- **本质**：预筛过滤器，不参与予以匹配
+- 作用：在向量数据库执行昂贵的向量相似度计算**之前**，先通过元数据快速圈定一个小的候选集，从而**降低计算量**并**排除无关噪声**。
+- 核心流程：
+    - 定义元数据标签，如果文档本身没有，可以利用大模型推理出输入问题的元数据
+    - 通过标签先对文档进行过滤
+    - 结合向量检索进一步定位到最相关的前 K 个知识块
+"""
+
+
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
-from langchain_community.chains.query_constructor.schema import AttributeInfo
-from langchain_community.retrievers.self_query.base import SelfQueryRetriever
-from langchain_community.chains.query_constructor.base import (
+
+from langchain_classic.retrievers.self_query.base import SelfQueryRetriever
+from langchain_classic.chains.query_constructor.schema import AttributeInfo
+from langchain_classic.chains.query_constructor.base import (
     StructuredQueryOutputParser,
     get_query_constructor_prompt,
 )
@@ -12,7 +28,7 @@ from advanced_rag.models.models import get_ali_clients
 #获得访问大模型和嵌入模型客户端
 llm,embeddings_model = get_ali_clients()
 
-# 加载文档
+# 加载文档：构造示例文档
 docs = [
     Document(
         page_content="作者A团队开发出基于人工智能的自动驾驶决策系统，在复杂路况下的响应速度提升300%",
@@ -50,6 +66,10 @@ docs = [
 
 vectorstore = Chroma.from_documents(docs, embeddings_model)
 
+# 文档内容描述（指导LLM理解文档内容）
+document_content_description = "技术文章简述"
+
+
 # 元数据字段定义（指导LLM如何解析查询条件）
 metadata_field_info = [
     AttributeInfo(
@@ -73,8 +93,6 @@ metadata_field_info = [
         type="float"
     )
 ]
-# 文档内容描述（指导LLM理解文档内容）
-document_content_description = "技术文章简述"
 
 # 创建自查询检索器（核心组件）
 '''SelfQueryRetriever 是 langchain 库中的一个工具，其主要功能是把自然语言查询转变为结构化查询，
@@ -87,6 +105,9 @@ retriever = SelfQueryRetriever.from_llm(
     # enable_limit=True, 限定只返回一个结果
 )
 
+
+# # ============ 测试代码 - 元数据索引 start ============
+# print("============ 测试代码 - 元数据索引 ============")
 # print("---------------------评分在9分以上的文章-------------------------------")
 # #查询条件：查询只约束分数 rating>9
 # print(retriever.invoke("我想了解评分在9分以上的文章"))
@@ -94,8 +115,12 @@ retriever = SelfQueryRetriever.from_llm(
 # print("---------------------作者B在2023年发布的文章-------------------------------")
 # # 第二个查询只约束作者和年份 author="B", year=2023
 # print(retriever.invoke("作者B在2023年发布的文章"))
+# exit()
+# # ============ 测试代码 - 元数据索引 start ============
 
 
+# ============ 测试代码 - 原理探究-内部工作机制 start ============
+print("============ 测试代码 - 原理探究-内部工作机制 ============")
 # 原理：构建查询解析器（分析内部工作机制用）
 '''构建查询提示模板
 document_content_description：对文档内容的概括性描述，例如 "有关各种主题的文章"。
@@ -112,13 +137,14 @@ output_parser = StructuredQueryOutputParser.from_components()
 query_constructor = prompt | llm | output_parser
 
 # 打印查询构造提示
-print("提示词：",prompt.format(query="我想了解评分在9分以上的文章"))
-print("提示词显示结束--------------------------提示词显示结束----------------------")
+print("------------ 提示词显示 ------------")
+print(prompt.format(query="我想了解评分在9分以上的文章"))
 
 # 打印结构化查询的结果
-print("结构化查询结果：",query_constructor.invoke(
+print("------------ 结构化查询结果 ------------")
+print(query_constructor.invoke(
     {
         "query": "作者B在2023年发布的文章"
     }
 ))
-# 看工作原理-结束
+# ============ 测试代码 - 原理探究-内部工作机制 end ============

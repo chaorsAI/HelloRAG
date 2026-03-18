@@ -1,7 +1,15 @@
-# summary_MultiVectorRetriever.py
-# 预检索优化-摘要索引示例
+# index_summary_MultiVectorRetriever.py
+# 预检索-索引优化-摘要索引示例
 # MultiVectorRetriever：LangChain在0.x时代提供的一种高级检索器。
 # 但是在1.0时代已经边缘化，推荐使用LCEL范式！！！
+"""
+- 应用场景：对于包含表格、图表、混合格式的半结构化文档，直接嵌入效果差。MultiVectorRetriever通过提取摘要或重述，能将非文本信息转化为可检索的语义，是处理财报、论文等文档的利器。
+- 核心流程：
+    1. 让LLM为每个块生成summary，并作为embedding存到summary database中
+    2. 在检索时，通过summary database找到最相关的summary，再回溯到原始文档中去
+    3. 将原始文本块作为上下文发送给LLM以获取答案
+"""
+
 
 import uuid
 

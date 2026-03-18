@@ -1,8 +1,20 @@
-# parent_child_LCV1.py
-# 预检索优化-父子索引在Langchain V1.0架构之后的示例
+# index_parent_child_LCV1.py
+# 预检索-索引优化-父子索引在Langchain V1.0架构之后的示例
 # ParentDocumentRetriever：LangChain中用于解决长文档检索困境的一种经典检索器。
 # 在Langchain1.0之后推荐使用LCEL范式自定义父子索引！！！
+"""
+- 核心逻辑: **“分层存储，回溯召回”** 。
+- 核心流程：
+1.   索引过程：
+- 1.1 使用一个**父分割器**将原始文档切割成较大的块（例如2000字符），用于保留完整语义。
+- 1.2 使用一个**子分割器**将每个父文档切割成更小的块（例如400字符），用于向量语义匹配。
+- 1.3 将子文档的向量存入**向量数据库**，同时将父文档的原始内容存入一个键值存储（**Docstore**，如InMemoryStore或MongoDB）。两者通过一个唯一的`doc_id`建立关联。
 
+2. 检索过程：
+
+- 2.1 当用户查询到来时，搜索与查询最相似的**子文档**。
+- 2.2 根据匹配到的子文档的`doc_id`，去Docstore中查找并返回对应**父文档**，最终将这个更大的上下文块提供给LLM生成答案。
+"""
 
 from typing import List, Dict, Any
 from uuid import uuid4

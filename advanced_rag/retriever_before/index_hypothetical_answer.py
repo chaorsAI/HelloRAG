@@ -1,4 +1,18 @@
-import langchain
+# index_hypothetical_answer.pyimport langchain
+# 预检索-索引优化-假设性文档。利用LLM生成一个“像答案的文本”，再用这个文本去检索真实文档，而不是直接用原始查询去检索
+# HypotheticalQuestions：常用`Pydantic`的`BaseModel`来严格定义这个“假设性问题”处理过程中的数据结构，确保每一步的数据流都清晰、可验证。
+"""
+- 核心逻辑：**利用LLM生成一个“像答案的文本”，再用这个文本去检索真实文档，而不是直接用原始查询去检索**
+- 本质：**语义对齐**
+- HyDE解决了传统RAG在零场景下的两大痛点：
+
+    -   **词汇不匹配（Lexical Gap）** ：用户口语化提问与知识库书面化文档在词汇上不重叠，导致向量检索失败。
+    -   **模态差异（Modality Gap）** ：短查询与长文档在向量空间中的分布不同，直接计算相似度效果不佳。
+- 核心流程：
+    1. **生成假设文档**：LLM根据用户Query生成一段详细的、包含专业术语和逻辑结构的假设性文本。
+    2. **对称检索**：由于假设文档在长度、风格和语义密度上更接近真实文档，它们处于同一向量子空间，检索相似度计算更准确
+"""
+
 from typing import List
 from langchain_core.stores import InMemoryByteStore
 from langchain_chroma import Chroma

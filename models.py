@@ -14,7 +14,7 @@ ALI_TONGYI_DEEPSEEK_R10528 = "deepseek-r1-0528"
 ALI_TONGYI_DEEPSEEK_V3 = "deepseek-v3"
 ALI_TONGYI_REASONER_MODEL = "qvq-max-latest"
 ALI_TONGYI_EMBEDDING_V2 = "text-embedding-v2"
-ALI_TONGYI_EMBEDDING_V3 = "text-embedding-v3"
+ALI_TONGYI_EMBEDDING_V3 = "text-embedding-v3"   # free Token已用尽
 ALI_TONGYI_EMBEDDING_V4 = "text-embedding-v4"
 
 # DeepSeek

@@ -1,5 +1,5 @@
-# parent_child_ParentDocumentRetriever.py
-# 预检索优化-父子索引示例
+# index_parent_child_ParentDocumentRetriever.py
+# 预检索-索引优化-父子索引示例
 # ParentDocumentRetriever：LangChain中用于解决长文档检索困境的一种经典检索器。
 # 特别是在Langchain1.0之后推荐使用LCEL范式！！！
 

@@ -4,18 +4,17 @@
 ALI_TONGYI_API_KEY_OS_VAR_NAME = "DASHSCOPE_API_KEY"
 ALI_TONGYI_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 ALI_TONGYI_MAX_MODEL = "qwen-max-latest"
-ALI_TONGYI_DEEPSEEK_R1 = "deepseek-r1"#云帆老师的免费额度最近到期时间：2025-07-26
+ALI_TONGYI_DEEPSEEK_R1 = "deepseek-r1"
 ALI_TONGYI_DEEPSEEK_V3 = "deepseek-v3"
-ALI_TONGYI_REASONER_MODEL = "qwq-plus"  #云帆老师的免费额度最近到期时间：2025-09-22
-ALI_TONGYI_EMBEDDING_MODEL = "text-embedding-v3"
-ALI_TONGYI_RERANK_MODEL = "gte-rerank-v2"#云帆老师的免费额度最近到期时间：2025-09-14
+ALI_TONGYI_REASONER_MODEL = "qwq-plus"
+ALI_TONGYI_EMBEDDING_MODEL = "text-embedding-v4"
+ALI_TONGYI_RERANK_MODEL = "gte-rerank-v2"
 
 DEEPSEEK_API_KEY_OS_VAR_NAME = "Deepseek_Key"
 DEEPSEEK_URL = "https://api.deepseek.com/v1"
 DEEPSEEK_CHAT_MODEL = "deepseek-chat"
 DEEPSEEK_REASONER_MODEL = "deepseek-reasoner"
 
-#云帆老师的TENCENT_HUNYUAN免费额度最近到期时间：2026-03-24
 TENCENT_HUNYUAN_API_KEY_OS_VAR_NAME = "HUNYUAN_API_KEY"
 TENCENT_HUNYUAN_URL = "https://api.hunyuan.cloud.tencent.com/v1"
 TENCENT_HUNYUAN_TURBO_MODEL = "hunyuan-turbos-latest"
