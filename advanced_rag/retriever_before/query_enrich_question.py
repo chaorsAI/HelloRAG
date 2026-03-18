@@ -1,3 +1,35 @@
+# query_enrich_question.py
+# 预检索-查询-问题丰富优化示例。通过将用户模糊的、口语化的自然语言查询，转化为结构清晰、信息完整的检索指令，从而大幅提升 RAG 系统的召回率
+#
+"""核心流程：
+    1.   **意图识别 (Intent Recognition)** ：
+
+    -   **目标**：判断用户 query 属于哪一类问题（如“查询天气”、“搜索文档”、“计算数学”）。
+    -   **技术**：通常使用轻量级分类器（如 BERT-based Classifier）或规则匹配，将 query 映射到预定义的模板库中。
+
+    2.   **模板匹配 (Template Matching)** ：
+
+    -   **目标**：找到最适合当前 query 的“填空”模板。
+    -   **技术**：每个模板定义了该类问题需要的关键信息槽位（Slots）。例如，天气查询模板需要 `[城市]`和 `[日期]`两个槽位。
+
+    3.   **槽位填充 (Slot Filling)** ：
+
+    -   **目标**：提取 query 中已有的信息，并识别缺失的信息。
+    -   **技术**：使用 NER（命名实体识别）或 LLM 提取实体。如果发现槽位缺失（如用户只说了“查天气”，没说城市），则进入交互补全阶段。
+
+    4.   **交互式补全 (Interactive Completion)** ：
+
+    -   **目标**：通过 LLM 生成自然、友好的引导语，引导用户补充缺失信息。
+    -   **技术**：LLM 根据缺失的槽位生成提示，如“请问您想查询哪个城市的天气？”。系统等待用户回复后，将新信息填充回槽位，直到所有必要信息完整。
+
+    5.   **Query 重构 (Query Reconstruction)** ：
+
+    -   **目标**：将填充完整的模板转化为标准的检索 query。
+    -   **技术**：将模板中的变量替换为实际值，生成最终的检索指令，送入向量数据库或搜索引擎。
+"""
+
+
+import json
 
 from langchain_community.embeddings.dashscope import DashScopeEmbeddings
 from langchain_openai import ChatOpenAI
@@ -5,9 +37,9 @@ from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.output_parsers import JsonOutputParser
-import json
 
 from advanced_rag.models.models import get_ali_model_client
+
 
 #获得访问大模型客户端
 llm = get_ali_model_client()
