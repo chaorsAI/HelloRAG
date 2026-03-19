@@ -21,11 +21,7 @@
 -   **串行策略**：当子问题之间存在**逻辑递进或依赖关系**，前一个问题的答案是后一个问题的基础时，采用串行处理。
 """
 
-
-from langchain_core.documents import Document
 from langchain_chroma import Chroma
-from langchain_openai import ChatOpenAI
-from langchain_community.embeddings.dashscope import DashScopeEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.language_models import BaseLanguageModel
@@ -36,7 +32,7 @@ from langchain_core.documents import Document
 from langchain_core.runnables import Runnable,RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
 
-from advanced_rag.models.models import  get_ali_clients
+from advanced_rag.models import  get_ali_clients
 
 #获得访问大模型和嵌入模型客户端
 llm,embeddings_model = get_ali_clients()

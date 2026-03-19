@@ -23,10 +23,10 @@ import uuid
 from langchain_core.documents import Document  
 from langchain_core.output_parsers import StrOutputParser  
 from langchain_core.prompts import ChatPromptTemplate  
-from langchain_core.runnables import RunnableMap, RunnableParallel
+from langchain_core.runnables import RunnableParallel
 from pydantic import BaseModel, Field
 
-from advanced_rag.models.models import get_ali_clients
+from advanced_rag.models import get_ali_clients
 
 #获得访问大模型和嵌入模型客户端
 client,embeddings_model = get_ali_clients()

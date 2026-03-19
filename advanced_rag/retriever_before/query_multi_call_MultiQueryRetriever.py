@@ -12,9 +12,6 @@
     2.   **检索与融合**：每个生成的 Query 都会独立进行向量检索，召回一批文档。最后，系统会对所有召回的文档进行 **去重** 和 **融合**，形成一个更全面的候选文档池
 """
 
-from operator import itemgetter
-
-from langchain_core.load import dumps, loads
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_classic.retrievers import MultiQueryRetriever
 from langchain_community.document_loaders import TextLoader
@@ -25,7 +22,7 @@ from langchain_core.prompts import PromptTemplate
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from advanced_rag.models.models import get_ali_clients
+from advanced_rag.models import get_ali_clients
 
 #获得访问大模型和嵌入模型客户端
 llm,embeddings_model = get_ali_clients()

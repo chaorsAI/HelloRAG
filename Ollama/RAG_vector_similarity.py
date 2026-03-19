@@ -19,7 +19,7 @@ def l2(a, b):
     return norm(x)
 
 
-def get_embeddings(texts, model=ALI_TONGYI_EMBEDDING_V4):
+def get_embeddings(texts, model=ALI_TONGYI_EMBEDDING_V2):
     #  texts 是一个包含要获取嵌入表示的文本的列表，
     #  model 则是用来指定要使用的模型的名称
     #  生成文本的嵌入表示。结果存储在data中。

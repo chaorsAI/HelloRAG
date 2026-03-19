@@ -24,7 +24,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from langchain_classic.retrievers import MultiVectorRetriever
 
-from advanced_rag.models.models import  get_ali_clients
+from advanced_rag.models import  get_ali_clients
 
 # 1.提取，分割，块（比较大）
 # 2.块，生成摘要

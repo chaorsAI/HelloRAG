@@ -23,7 +23,7 @@ from langchain_classic.chains.query_constructor.base import (
     get_query_constructor_prompt,
 )
 
-from advanced_rag.models.models import get_ali_clients
+from advanced_rag.models import get_ali_clients
 
 #获得访问大模型和嵌入模型客户端
 llm,embeddings_model = get_ali_clients()

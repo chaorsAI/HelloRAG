@@ -97,12 +97,12 @@ class MyVectorDBConnector:
 
 
     # 封装向量模型与API的交互操作，通过自定义函数 get_embeddings 提供向量模型的调用。
-    def get_embeddings(self, texts, model=ALI_TONGYI_EMBEDDING_V4):
+    def get_embeddings(self, texts, model=ALI_TONGYI_EMBEDDING_V2):
         data = self.client.embeddings.create(input=texts, model=model).data
         return [x.embedding for x in data]
 
     # get_embeddings函数的变体版，因为各个模型对一次能处理的文本条数有限制且每个平台不一致，新增一个batch_size参数用以控制。
-    def get_embeddings_batch(self,texts, model=ALI_TONGYI_EMBEDDING_V4, batch_size=10):
+    def get_embeddings_batch(self,texts, model=ALI_TONGYI_EMBEDDING_V2, batch_size=10):
         all_embeddings = []
         for i in range(0, len(texts), batch_size):
             batch_text = texts[i:i + batch_size]

@@ -109,7 +109,7 @@ def get_ds_model_client(model=DEEPSEEK_CHAT_MODEL,
 
 
 # 通过LangChain获得一个阿里通义千问嵌入模型的实例
-def get_ali_embeddings(model=ALI_TONGYI_EMBEDDING_V4):
+def get_ali_embeddings(model=ALI_TONGYI_EMBEDDING_V2):
     """通过LangChain获得一个阿里通义千问嵌入模型的实例"""
     return DashScopeEmbeddings(
         model=model,

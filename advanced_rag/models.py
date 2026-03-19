@@ -1,14 +1,16 @@
 # \RAG\models.py
 #可用模型列表，以及获得访问模型的客户端
 #实际使用时可以根据自己的实际情况调整
+from langsmith.run_trees import LANGSMITH_PREFIX
+
 ALI_TONGYI_API_KEY_OS_VAR_NAME = "DASHSCOPE_API_KEY"
 ALI_TONGYI_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 ALI_TONGYI_MAX_MODEL = "qwen-max-latest"
 ALI_TONGYI_DEEPSEEK_R1 = "deepseek-r1"
 ALI_TONGYI_DEEPSEEK_V3 = "deepseek-v3"
 ALI_TONGYI_REASONER_MODEL = "qwq-plus"
-ALI_TONGYI_EMBEDDING_MODEL = "text-embedding-v4"
-ALI_TONGYI_RERANK_MODEL = "gte-rerank-v2"
+ALI_TONGYI_EMBEDDING_MODEL = "text-embedding-v2"
+ALI_TONGYI_RERANK_MODEL = "gte-rerank-v2"   # 后检索-重排序模型
 
 DEEPSEEK_API_KEY_OS_VAR_NAME = "Deepseek_Key"
 DEEPSEEK_URL = "https://api.deepseek.com/v1"
@@ -24,16 +26,21 @@ TENCENT_HUNYUAN_EMBEDDING_MODEL = "hunyuan-embedding"
 TENCENT_SECRET_ID_OS_VAR_NAME = "Tencent_SecretId"
 TENCENT_SECRET_KEY_OS_VAR_NAME = "Tencent_SecretKey"
 
-#云帆老师的百川大模型免费额度最近到期时间：2025-07-11
 BAICHUAN_API_KEY_OS_VAR_NAME = "Baichuan_API_Key"
 BAICHUAN_EMBEDDING_MODEL = "Baichuan-Text-Embedding"
 BAICHUAN_EMBEDDING_URL = "https://api.baichuan-ai.com/v1/embeddings"
+
+# LangSmith
+LANGSMITH_API_KEY_OS_VAR_NAME = "LANGSMITH_API_KEY"
+LANGSMITH_API_URL = "https://api.smith.langchain.com"
 
 import os
 from langchain_openai import ChatOpenAI
 import inspect
 from langchain_community.embeddings import BaichuanTextEmbeddings, DashScopeEmbeddings, HunyuanEmbeddings
 from langchain_community.document_compressors.dashscope_rerank import DashScopeRerank
+
+from langsmith import Client
 
 def get_lc_model_client(api_key=os.getenv(TENCENT_HUNYUAN_API_KEY_OS_VAR_NAME), base_url=TENCENT_HUNYUAN_URL
                         , model=TENCENT_HUNYUAN_TURBO_MODEL, temperature = 0.7,verbose=False, debug=False):
@@ -129,4 +136,10 @@ def get_ali_rerank(top_n=3):
     return DashScopeRerank(
         model=ALI_TONGYI_RERANK_MODEL, dashscope_api_key=os.getenv(ALI_TONGYI_API_KEY_OS_VAR_NAME),
         top_n=top_n
+)
+
+def get_langsimth_client():
+    return Client(
+        api_key=os.getenv(LANGSMITH_API_KEY_OS_VAR_NAME),  # 如果传入，会覆盖环境变量
+        api_url=LANGSMITH_API_URL,  # 覆盖端点
 )

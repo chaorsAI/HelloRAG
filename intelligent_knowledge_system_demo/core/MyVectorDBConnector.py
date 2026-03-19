@@ -44,7 +44,7 @@ class MyVectorDBConnector:
 
         print("【向量数据库】连接成功，数据保存在 ../chroma 文件夹")
 
-    def get_embeddings(self, texts, model=ALI_TONGYI_EMBEDDING_V4):
+    def get_embeddings(self, texts, model=ALI_TONGYI_EMBEDDING_V2):
         """
         【功能】将文本转换为向量（Embedding）
 
@@ -75,7 +75,7 @@ class MyVectorDBConnector:
         # x.embedding 是每个文本对应的向量
         return [x.embedding for x in data]
 
-    def get_embeddings_batch(self, texts, model=ALI_TONGYI_EMBEDDING_V4, batch_size=10):
+    def get_embeddings_batch(self, texts, model=ALI_TONGYI_EMBEDDING_V2, batch_size=10):
         """
         【功能】批量将文本转换为向量（处理大量文本）
 

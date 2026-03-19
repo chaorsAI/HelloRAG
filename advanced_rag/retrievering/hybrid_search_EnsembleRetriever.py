@@ -1,6 +1,5 @@
 # hybrid_search_EnsembleRetriever.py
 # 检索优化-混合检索。通过组合两种根本不同的检索方式，来克服单一方法的固有缺陷，从而在“**精确匹配**”与“**语义理解**”这两个常常矛盾的目标上取得最佳平衡。
-# EnsembleRetriever:
 """
 - 检索方式：
     -  **稀疏检索**：代表算法是**BM25**。它将文档和查询表示为庞大的、稀疏的向量（维度对应所有词表里的词，大部分值为0），通过统计关键词出现的频率、位置等信息计算相关性。它**不关心词的语义**，只关心“词是否匹配”。
@@ -15,7 +14,6 @@
 
 from langchain_chroma import Chroma
 from langchain_community.document_loaders import TextLoader
-from langchain_community.retrievers import BM25Retriever
 from langchain_community.retrievers.bm25 import BM25Retriever
 
 from langchain_core.output_parsers import StrOutputParser
@@ -26,7 +24,7 @@ from langchain_classic.retrievers import EnsembleRetriever
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from advanced_rag.models.models import get_ali_clients
+from advanced_rag.models import get_ali_clients
 
 
 #获得访问大模型和嵌入模型客户端

@@ -27,7 +27,7 @@ test_query = ["我爱你",
 
 
 # vec = get_embeddings(test_query, model=ALI_TONGYI_EMBEDDING_V3, dimensions=64)
-vec = get_embeddings(test_query, model=ALI_TONGYI_EMBEDDING_V4)
+vec = get_embeddings(test_query, model=ALI_TONGYI_EMBEDDING_V2)
 # vec = get_embeddings(test_query, model=ALI_TONGYI_EMBEDDING_V4, dimensions=512)
 print(vec)
 print("=" * 100)

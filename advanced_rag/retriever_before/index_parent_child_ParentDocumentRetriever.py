@@ -3,17 +3,15 @@
 # ParentDocumentRetriever：LangChain中用于解决长文档检索困境的一种经典检索器。
 # 特别是在Langchain1.0之后推荐使用LCEL范式！！！
 
-from langchain_community.document_loaders import WebBaseLoader, TextLoader
+from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
-from langchain_community.embeddings.dashscope import DashScopeEmbeddings
 from langchain_classic.retrievers import ParentDocumentRetriever
 from langchain_core.stores import InMemoryStore
-from  langchain_openai.chat_models import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableMap
 from langchain_core.output_parsers import StrOutputParser
-from advanced_rag.models.models import get_ali_clients
+from advanced_rag.models import get_ali_clients
 
 #获得访问大模型和嵌入模型客户端
 client,embeddings_model = get_ali_clients()

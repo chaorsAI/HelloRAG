@@ -31,14 +31,12 @@
 
 import json
 
-from langchain_community.embeddings.dashscope import DashScopeEmbeddings
-from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.output_parsers import JsonOutputParser
 
-from advanced_rag.models.models import get_ali_model_client
+from advanced_rag.models import get_ali_model_client
 
 
 #获得访问大模型客户端

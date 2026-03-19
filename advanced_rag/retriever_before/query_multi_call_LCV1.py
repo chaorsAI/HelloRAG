@@ -9,13 +9,12 @@ import asyncio
 from langchain_chroma.vectorstores import Chroma
 from langchain_core.documents import Document
 from langchain_core.prompts import PromptTemplate
-from langchain_core.load import dumps, loads
 
 from langchain_community.document_loaders import TextLoader
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from advanced_rag.models.models import get_ali_clients
+from advanced_rag.models import get_ali_clients
 
 
 #获得访问大模型和嵌入模型客户端

@@ -1,6 +1,7 @@
 from langchain_core.documents import Document
 
-from models import get_ali_rerank
+from advanced_rag.models import get_ali_rerank
+
 
 reranker = get_ali_rerank()
 query = "孕妇感冒了怎么办"

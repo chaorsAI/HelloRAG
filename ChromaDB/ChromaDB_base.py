@@ -39,7 +39,7 @@ class MyVectorDBConnector:
         self.client = get_normal_client()
 
     # 向量化
-    def get_embeddings(self, texts, model=ALI_TONGYI_EMBEDDING_V4):
+    def get_embeddings(self, texts, model=ALI_TONGYI_EMBEDDING_V2):
         '''封装 OpenAI 的 Embedding 模型接口'''
         data = self.client.embeddings.create(input=texts, model=model).data
         return [x.embedding for x in data]
