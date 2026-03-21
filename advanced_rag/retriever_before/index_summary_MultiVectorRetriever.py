@@ -26,6 +26,7 @@ from langchain_classic.retrievers import MultiVectorRetriever
 
 from advanced_rag.models import  get_ali_clients
 
+
 # 1.提取，分割，块（比较大）
 # 2.块，生成摘要
 # 3.将摘要向量化， 摘要和原始文档要建立关系
