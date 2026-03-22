@@ -7,13 +7,17 @@
 # 官网: https://bailian.console.aliyun.com/#/home
 ALI_TONGYI_API_KEY_OS_VAR_NAME = "DASHSCOPE_API_KEY"
 ALI_TONGYI_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-ALI_TONGYI_MAX_MODEL = "qwen-max-latest"
+ALI_TONGYI_MAX_MODEL = "qwen-max"
+ALI_TONGYI_MAX_MODEL_LATEST= "qwen-max-latest"
+ALI_TONGYI_MAX_MODEL = "qwen-max"
+
 # 文档1中独有的Turbo模型常量予以保留
 ALI_TONGYI_TURBO_MODEL = "qwen-turbo-latest"
 ALI_TONGYI_DEEPSEEK_R1 = "deepseek-r1"
 ALI_TONGYI_DEEPSEEK_V3 = "deepseek-v3"
 ALI_TONGYI_REASONER_MODEL = "qwq-plus"  # 采用文档2的更新值
-ALI_TONGYI_EMBEDDING_MODEL = "text-embedding-v2"  # 采用文档2的命名
+ALI_TONGYI_EMBEDDING_MODEL = "text-embedding-v1"  # 采用文档2的命名
+ALI_TONGYI_EMBEDDING_MODEL_V1 = "text-embedding-v1"
 ALI_TONGYI_RERANK_MODEL = "gte-rerank-v2"   # 从文档2引入：后检索-重排序模型
 
 # DeepSeek
