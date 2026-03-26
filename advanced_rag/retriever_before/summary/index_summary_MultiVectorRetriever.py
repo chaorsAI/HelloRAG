@@ -46,7 +46,7 @@ from advanced_rag.models import  get_ali_clients
 client,embeddings_model = get_ali_clients()
 
 # 初始化文档加载器
-loader = TextLoader("../data/deepseek百度百科.txt", encoding="utf-8")
+loader = TextLoader("../../data/deepseek百度百科.txt", encoding="utf-8")
 
 # 加载文档
 docs = loader.load()
